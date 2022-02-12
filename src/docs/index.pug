@@ -60,7 +60,10 @@ html(lang="en")
         h1.header__title Animation frame scroll
     main.main
       div.colLayout
-        div.colLayout__nav nav
+        div.colLayout__side
+          div.sidebar
+            button.sidebar__button(data-destroy) Destroy
+            button.sidebar__button(data-reinit) Reinit
         div.colLayout__main
           each section, index in sections
             section.textImage(class= (index % 2 === 1) ? 'textImage--reverse' : '')
@@ -82,6 +85,4 @@ html(lang="en")
     footer.footer#footer
       div.container
         button.footer__scrollToTop(data-scroll-top) Scroll to top
-        button.footer__scrollToTop(data-destroy) Destroy
-        button.footer__scrollToTop(data-reinit) Reinit
     script(type="module", src="./js/index.js")

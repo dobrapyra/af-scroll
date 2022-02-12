@@ -522,19 +522,31 @@ function hmrAcceptRun(bundle, id) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 var _module = require("../../../dist/module");
 var _moduleDefault = parcelHelpers.interopDefault(_module);
-const afScroll = new _moduleDefault.default();
-const scrollTopButton = document.querySelector('[data-scroll-top]');
-scrollTopButton.addEventListener('click', ()=>{
-    afScroll.scrollTo(0);
-});
-const destroyButton = document.querySelector('[data-destroy]');
-destroyButton.addEventListener('click', ()=>{
-    afScroll.destroy();
-});
-const reinitButton = document.querySelector('[data-reinit]');
-reinitButton.addEventListener('click', ()=>{
-    afScroll.init();
-});
+(function() {
+    // AFScroll
+    const afScroll = new _moduleDefault.default();
+    const scrollTopButton = document.querySelector('[data-scroll-top]');
+    scrollTopButton.addEventListener('click', ()=>{
+        afScroll.scrollTo(0);
+    });
+    const destroyButton = document.querySelector('[data-destroy]');
+    destroyButton.addEventListener('click', ()=>{
+        afScroll.destroy();
+    });
+    const reinitButton = document.querySelector('[data-reinit]');
+    reinitButton.addEventListener('click', ()=>{
+        afScroll.init();
+    });
+    // Accordion
+    const accordionEl = document.querySelector('.accordion');
+    const accordionItems = accordionEl.querySelectorAll('.accordion__item');
+    accordionItems.forEach((itemEl)=>{
+        const headEl = itemEl.querySelector('.accordion__head');
+        headEl.addEventListener('click', ()=>{
+            itemEl.classList.toggle('accordion__item--opened');
+        });
+    });
+})();
 
 },{"../../../dist/module":"d7qAX","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"d7qAX":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
