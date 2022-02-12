@@ -12,7 +12,7 @@
     }
   }
 
-  &__text {
+  &__content {
     width: 60%;
     padding-right: 24px;
 
@@ -20,6 +20,20 @@
       padding-right: 0;
       padding-left: 24px;
     }
+  }
+
+  &__title {
+    font-weight: 300;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 32px;
+    line-height: 1.2;
+    margin-bottom: 1em;
+  }
+
+  &__text {
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 18px;
+    line-height: 1.5;
   }
 
   &__image {

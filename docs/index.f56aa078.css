@@ -116,13 +116,25 @@ body {
 .textImage--reverse .textImage__inner {
   flex-direction: row-reverse;
 }
-.textImage__text {
+.textImage__content {
   width: 60%;
   padding-right: 24px;
 }
-.textImage--reverse .textImage__text {
+.textImage--reverse .textImage__content {
   padding-right: 0;
   padding-left: 24px;
+}
+.textImage__title {
+  font-weight: 300;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 32px;
+  line-height: 1.2;
+  margin-bottom: 1em;
+}
+.textImage__text {
+  font-family: "Times New Roman", Times, serif;
+  font-size: 18px;
+  line-height: 1.5;
 }
 .textImage__image {
   position: relative;
@@ -145,4 +157,45 @@ body {
   height: 100%;
   object-fit: cover;
 }
-/*# sourceMappingURL=index.da56bb87.css.map */
+
+.accordion {
+  display: block;
+  padding: 20px 0;
+}
+.accordion__items {
+  display: block;
+}
+.accordion__item {
+  display: block;
+}
+.accordion__head {
+  display: block;
+  width: 100%;
+  background-color: #e1e1e1;
+  border: 1px solid #a3a3a3;
+  text-align: left;
+  font-weight: 300;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 24px;
+  line-height: 1.2;
+  padding: 4px 10px;
+}
+.accordion__body {
+  display: block;
+  width: 100%;
+  overflow: hidden;
+  visibility: hidden;
+  height: 0;
+}
+.accordion__item--opened .accordion__body {
+  visibility: visible;
+  height: auto;
+}
+.accordion__text {
+  display: block;
+  padding: 8px 10px;
+  font-family: "Times New Roman", Times, serif;
+  font-size: 18px;
+  line-height: 1.5;
+}
+/*# sourceMappingURL=index.f56aa078.css.map */

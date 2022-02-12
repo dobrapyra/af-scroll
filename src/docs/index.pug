@@ -1,0 +1,87 @@
+-
+  const sections = [
+    {
+      title: 'Section 1',
+      text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate ex iusto repudiandae officiis obcaecati fuga, dicta, modi optio, consectetur consequuntur voluptates est officia eligendi accusantium nisi ut deserunt inventore nulla.',
+      image: { src: './img/01.jpg', alt: 'image 01' }
+    },
+    {
+      title: 'Section 2',
+      text: 'Cupiditate ex iusto repudiandae officiis obcaecati fuga, dicta, modi optio, consectetur consequuntur voluptates est officia eligendi accusantium nisi ut deserunt inventore nulla. Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+      image: { src: './img/02.jpg', alt: 'image 02' }
+    },
+    {
+      title: 'Section 3',
+      text: 'Cupiditate ex iusto repudiandae officiis obcaecati fuga, consectetur consequuntur voluptates est officia eligendi accusantium nisi ut deserunt inventore nulla. Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+      image: { src: './img/03.jpg', alt: 'image 03' }
+    },
+    {
+      title: 'Section 4',
+      text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate ex iusto repudiandae officiis obcaecati fuga, dicta, modi optio, consectetur consequuntur voluptates est officia eligendi accusantium nisi ut deserunt inventore nulla.',
+      image: { src: './img/01.jpg', alt: 'image 01' }
+    },
+    {
+      title: 'Section 5',
+      text: 'Cupiditate ex iusto repudiandae officiis obcaecati fuga, dicta, modi optio, consectetur consequuntur voluptates est officia eligendi accusantium nisi ut deserunt inventore nulla. Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+      image: { src: './img/02.jpg', alt: 'image 02' }
+    },
+    {
+      title: 'Section 6',
+      text: 'Cupiditate ex iusto repudiandae officiis obcaecati fuga, consectetur consequuntur voluptates est officia eligendi accusantium nisi ut deserunt inventore nulla. Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+      image: { src: './img/03.jpg', alt: 'image 03' }
+    }
+  ]
+-
+  const items = [
+    {
+      title: 'Title 1',
+      text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate ex iusto repudiandae officiis obcaecati fuga, dicta, modi optio, consectetur consequuntur voluptates est officia eligendi accusantium nisi ut deserunt inventore nulla.'
+    },
+    {
+      title: 'Title 2',
+      text: 'Cupiditate ex iusto repudiandae officiis obcaecati fuga, dicta, modi optio, consectetur consequuntur voluptates est officia eligendi accusantium nisi ut deserunt inventore nulla.'
+    },
+    {
+      title: 'Title 3',
+      text: 'Dolor sit amet consectetur adipisicing elit. Cupiditate ex iusto repudiandae officiis obcaecati fuga, dicta, modi optio, consectetur consequuntur voluptates est officia eligendi accusantium nisi.'
+    },
+  ]
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(http-equiv="X-UA-Compatible", content="IE=edge")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title Animation frame scroll
+    link(rel="stylesheet", href="./scss/index.scss")
+  body
+    header.header#header
+      div.container
+        h1.header__title Animation frame scroll
+    main.main
+      div.colLayout
+        div.colLayout__nav nav
+        div.colLayout__main
+          each section, index in sections
+            section.textImage(class= (index % 2 === 1) ? 'textImage--reverse' : '')
+              div.container
+                div.textImage__inner
+                  div.textImage__content
+                    h2.textImage__title= section.title
+                    p.textImage__text= section.text
+                  div.textImage__image
+                    img(src=section.image.src, alt=section.image.alt, class="textImage__img")
+      section.accordion
+        div.container
+          div.accordion__items
+            each item in items
+              div.accordion__item
+                button.accordion__head= item.title
+                div.accordion__body
+                  p.accordion__text= item.text
+    footer.footer#footer
+      div.container
+        button.footer__scrollToTop(data-scroll-top) Scroll to top
+        button.footer__scrollToTop(data-destroy) Destroy
+        button.footer__scrollToTop(data-reinit) Reinit
+    script(type="module", src="./js/index.js")

@@ -8,7 +8,7 @@
   "scripts": {
     "watch": "parcel watch",
     "build": "parcel build",
-    "demo": "parcel src/docs/index.html --dist-dir docs --port 1235"
+    "demo": "parcel src/docs/index.pug --dist-dir docs --port 1235"
   },
   "keywords": [
     "animation",
@@ -17,7 +17,8 @@
   "author": "dobrapyra",
   "license": "MIT",
   "devDependencies": {
-    "@parcel/transformer-sass": "^2.2.0",
-    "parcel": "^2.2.0"
+    "@parcel/transformer-pug": "^2.3.1",
+    "@parcel/transformer-sass": "^2.3.1",
+    "parcel": "^2.3.1"
   }
 }
