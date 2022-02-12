@@ -1,0 +1,23 @@
+{
+  "name": "af-scroll",
+  "version": "1.0.0",
+  "description": "Animation frame scroll",
+  "source": "src/index.js",
+  "main": "dist/main.js",
+  "module": "dist/module.js",
+  "scripts": {
+    "watch": "parcel watch",
+    "build": "parcel build",
+    "demo": "parcel src/docs/index.html --dist-dir docs --port 1235"
+  },
+  "keywords": [
+    "animation",
+    "scroll"
+  ],
+  "author": "dobrapyra",
+  "license": "MIT",
+  "devDependencies": {
+    "@parcel/transformer-sass": "^2.2.0",
+    "parcel": "^2.2.0"
+  }
+}

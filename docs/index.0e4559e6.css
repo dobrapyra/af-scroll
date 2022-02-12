@@ -1,0 +1,37 @@
+html,
+body {
+  margin: 0;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+.container {
+  display: block;
+  width: 100%;
+  max-width: 1024px;
+  margin: 0 auto;
+}
+
+.header {
+  display: block;
+}
+
+.textImage {
+  display: block;
+  padding: 30px 0;
+}
+.textImage__inner {
+  display: flex;
+  align-items: flex-start;
+}
+.textImage__text {
+  width: 60%;
+}
+.textImage__image {
+  width: 40%;
+}
+/*# sourceMappingURL=index.0e4559e6.css.map */

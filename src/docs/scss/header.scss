@@ -1,0 +1,11 @@
+.header {
+  display: block;
+  padding: 12px 0;
+  border-bottom: 1px solid #c3c3c3;
+
+  &__title {
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 24px;
+  }
+}

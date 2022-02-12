@@ -1,0 +1,18 @@
+.colLayout {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: flex-start;
+
+  &__nav {
+    position: sticky;
+    top: 0;
+    right: 0;
+    width: 240px;
+    flex-shrink: 0;
+  }
+
+  &__main {
+    flex-grow: 1;
+    margin-right: 20px;
+  }
+}
