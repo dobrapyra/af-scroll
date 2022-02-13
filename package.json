@@ -1,10 +1,14 @@
 {
   "name": "af-scroll",
   "version": "1.0.0",
-  "description": "Animation frame scroll",
+  "description": "Animation Frame Scroll",
   "source": "src/index.js",
   "main": "dist/main.js",
   "module": "dist/module.js",
+  "files": [
+    "/readme.md",
+    "/dist"
+  ],
   "scripts": {
     "watch": "parcel watch",
     "build": "parcel build",
@@ -12,7 +16,9 @@
   },
   "keywords": [
     "animation",
-    "scroll"
+    "scroll",
+    "smooth scroll",
+    "lock scroll"
   ],
   "author": "dobrapyra",
   "license": "MIT",
