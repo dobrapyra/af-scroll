@@ -117,7 +117,7 @@ class $cf838c15c8b009ba$export$2e2bcd8739ae039 {
     }
     onResize() {
         this.updateHeight();
-    // if (this.autoHeight > 0) this.updateHeight(); // double to fix some size issues
+        this.updateHeight(); // double to fix some size issues
     }
     updateHeight() {
         const scrollHeight = this.scrollEl.scrollHeight;

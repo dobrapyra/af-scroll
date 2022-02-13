@@ -136,7 +136,7 @@ export default class AFScroll {
 
   onResize() {
     this.updateHeight();
-    // if (this.autoHeight > 0) this.updateHeight(); // double to fix some size issues
+    this.updateHeight(); // double to fix some size issues
   }
 
   updateHeight() {
