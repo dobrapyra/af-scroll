@@ -7,7 +7,7 @@ import { each, lerp, style } from './helpers';
  * @property {Number} smoothLimit min diff between current and target value to keep smooth loop
  * @property {String} className css class name of scroll wrapper element
  * @property {Array} wrapExclude css selector to exclude from wrapping
- * @property {Number} autoHeight height checkoing period in frames
+ * @property {Number} autoHeight height checkoing period in frames, 1: each frame, 0: disabled
  * @property {Function} onUpdate callback function triggered on scroll update
  * @property {Function} onComplete callback function triggered after smooth loop stopped
  */
