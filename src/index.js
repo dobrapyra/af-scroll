@@ -28,6 +28,7 @@ export default class AFScroll {
 
     this.targetScroll = 0;
     this.lastScroll = 0;
+    this.lockedScroll = null;
 
     this.bodyEl = document.getElementsByTagName('body')[0];
     this.scrollEl = null;
@@ -100,6 +101,8 @@ export default class AFScroll {
   }
 
   onScroll() {
+    if (this.lockedScroll !== null) this.scrollTo(this.lockedScroll);
+
     this.targetScroll = window.scrollY;
 
     cancelAnimationFrame(this.raf);
@@ -149,6 +152,22 @@ export default class AFScroll {
   }
 
   /**
+   * lock scroll
+   * @public
+   */
+  lock() {
+    this.lockedScroll = this.lastScroll;
+  }
+
+  /**
+   * unlock scroll
+   * @public
+   */
+  unlock() {
+    this.lockedScroll = null;
+  }
+
+  /**
    * destroy AFScroll
    * @public
    */
@@ -157,6 +176,8 @@ export default class AFScroll {
 
     this.unbindEvents();
     this.removeScroll();
+
+    this.lockedScroll = null;
   }
 
   /**

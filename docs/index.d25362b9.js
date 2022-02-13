@@ -525,17 +525,40 @@ var _moduleDefault = parcelHelpers.interopDefault(_module);
 (function() {
     // AFScroll
     const afScroll = new _moduleDefault.default();
-    const scrollTopButton = document.querySelector('[data-scroll-top]');
-    scrollTopButton.addEventListener('click', ()=>{
-        afScroll.scrollTo(0);
-    });
-    const destroyButton = document.querySelector('[data-destroy]');
-    destroyButton.addEventListener('click', ()=>{
-        afScroll.destroy();
-    });
-    const reinitButton = document.querySelector('[data-reinit]');
-    reinitButton.addEventListener('click', ()=>{
-        afScroll.init();
+    [
+        {
+            selector: '[data-scroll-top]',
+            cb: ()=>{
+                afScroll.scrollTo(0);
+            }
+        },
+        {
+            selector: '[data-destroy]',
+            cb: ()=>{
+                afScroll.destroy();
+            }
+        },
+        {
+            selector: '[data-reinit]',
+            cb: ()=>{
+                afScroll.init();
+            }
+        },
+        {
+            selector: '[data-lock]',
+            cb: ()=>{
+                afScroll.lock();
+            }
+        },
+        {
+            selector: '[data-unlock]',
+            cb: ()=>{
+                afScroll.unlock();
+            }
+        }, 
+    ].map((action)=>{
+        const button = document.querySelector(action.selector);
+        button.addEventListener('click', action.cb);
     });
     // Accordion
     const accordionEl = document.querySelector('.accordion');
@@ -587,6 +610,7 @@ class $cf838c15c8b009ba$export$2e2bcd8739ae039 {
         this.onComplete = onComplete;
         this.targetScroll = 0;
         this.lastScroll = 0;
+        this.lockedScroll = null;
         this.bodyEl = document.getElementsByTagName('body')[0];
         this.scrollEl = null;
         this.bindThis();
@@ -643,6 +667,7 @@ class $cf838c15c8b009ba$export$2e2bcd8739ae039 {
         window.removeEventListener('resize', this.onResizeEvent);
     }
     onScroll() {
+        if (this.lockedScroll !== null) this.scrollTo(this.lockedScroll);
         this.targetScroll = window.scrollY;
         cancelAnimationFrame(this.raf);
         this.raf = requestAnimationFrame(this.smoothUpdateTick);
@@ -681,12 +706,25 @@ class $cf838c15c8b009ba$export$2e2bcd8739ae039 {
         document.body.scrollTop = document.documentElement.scrollTop = scroll;
     }
     /**
+   * lock scroll
+   * @public
+   */ lock() {
+        this.lockedScroll = this.lastScroll;
+    }
+    /**
+   * unlock scroll
+   * @public
+   */ unlock() {
+        this.lockedScroll = null;
+    }
+    /**
    * destroy AFScroll
    * @public
    */ destroy() {
         if (this.scrollEl === null) return;
         this.unbindEvents();
         this.removeScroll();
+        this.lockedScroll = null;
     }
     /**
    * remove scroll wrapper element

@@ -64,6 +64,8 @@ html(lang="en")
           div.sidebar
             button.sidebar__button(data-destroy) Destroy
             button.sidebar__button(data-reinit) Reinit
+            button.sidebar__button(data-lock) Lock
+            button.sidebar__button(data-unlock) Unlock
         div.colLayout__main
           each section, index in sections
             section.textImage(class= (index % 2 === 1) ? 'textImage--reverse' : '')

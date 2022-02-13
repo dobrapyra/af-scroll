@@ -44,6 +44,7 @@ class $4fa36e821943b400$export$2e2bcd8739ae039 {
         this.onComplete = onComplete;
         this.targetScroll = 0;
         this.lastScroll = 0;
+        this.lockedScroll = null;
         this.bodyEl = document.getElementsByTagName('body')[0];
         this.scrollEl = null;
         this.bindThis();
@@ -100,6 +101,7 @@ class $4fa36e821943b400$export$2e2bcd8739ae039 {
         window.removeEventListener('resize', this.onResizeEvent);
     }
     onScroll() {
+        if (this.lockedScroll !== null) this.scrollTo(this.lockedScroll);
         this.targetScroll = window.scrollY;
         cancelAnimationFrame(this.raf);
         this.raf = requestAnimationFrame(this.smoothUpdateTick);
@@ -138,12 +140,25 @@ class $4fa36e821943b400$export$2e2bcd8739ae039 {
         document.body.scrollTop = document.documentElement.scrollTop = scroll;
     }
     /**
+   * lock scroll
+   * @public
+   */ lock() {
+        this.lockedScroll = this.lastScroll;
+    }
+    /**
+   * unlock scroll
+   * @public
+   */ unlock() {
+        this.lockedScroll = null;
+    }
+    /**
    * destroy AFScroll
    * @public
    */ destroy() {
         if (this.scrollEl === null) return;
         this.unbindEvents();
         this.removeScroll();
+        this.lockedScroll = null;
     }
     /**
    * remove scroll wrapper element
