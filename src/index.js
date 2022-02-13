@@ -1,12 +1,13 @@
 import { each, lerp, style } from './helpers';
 
 /**
- * AFScroll
+ * AFScroll (Animation Frame Scroll)
  * @param {Object} options general options
  * @property {Number} smoothForce smoothing force in range 0.0 - 1.0, 0: no smooth, 1: no scroll
  * @property {Number} smoothLimit min diff between current and target value to keep smooth loop
  * @property {String} className css class name of scroll wrapper element
  * @property {Array} wrapExclude css selector to exclude from wrapping
+ * @property {Number} autoHeight height checkoing period in frames
  * @property {Function} onUpdate callback function triggered on scroll update
  * @property {Function} onComplete callback function triggered after smooth loop stopped
  */
@@ -16,6 +17,7 @@ export default class AFScroll {
     smoothLimit = 0.2,
     className = 'afScroll',
     wrapExclude = 'script, link',
+    autoHeight = 6,
     onUpdate = () => {},
     onComplete = () => {}
   } = {}) {
@@ -23,6 +25,7 @@ export default class AFScroll {
     this.smoothLimit = smoothLimit;
     this.className = className;
     this.wrapExclude = wrapExclude;
+    this.autoHeight = autoHeight;
     this.onUpdate = onUpdate;
     this.onComplete = onComplete;
 
@@ -32,6 +35,8 @@ export default class AFScroll {
 
     this.bodyEl = document.getElementsByTagName('body')[0];
     this.scrollEl = null;
+    this.autoHeightFrame = 0;
+    this.lastHeight = null;
 
     this.bindThis();
     this.init();
@@ -46,12 +51,13 @@ export default class AFScroll {
 
     this.targetScroll = window.scrollY;
     this.createScroll();
-    this.resizeBody();
+    this.onResize();
 
     this.scrollTo(this.targetScroll);
     this.updateScroll(this.targetScroll);
 
     this.bindEvents();
+    this.startAutoHeight();
   }
 
   /**
@@ -88,6 +94,7 @@ export default class AFScroll {
     this.onScrollEvent = this.onScroll.bind(this);
     this.onResizeEvent = this.onResize.bind(this);
     this.smoothUpdateTick = this.smoothUpdate.bind(this);
+    this.autoHeightTick = this.autoHeightUpdate.bind(this);
   }
 
   bindEvents() {
@@ -105,8 +112,8 @@ export default class AFScroll {
 
     this.targetScroll = window.scrollY;
 
-    cancelAnimationFrame(this.raf);
-    this.raf = requestAnimationFrame(this.smoothUpdateTick);
+    cancelAnimationFrame(this.smoothRaf);
+    this.smoothRaf = requestAnimationFrame(this.smoothUpdateTick);
   }
 
   smoothUpdate() {
@@ -118,7 +125,7 @@ export default class AFScroll {
 
     this.updateScroll(lerp(this.lastScroll, this.targetScroll, this.smoothFactor));
 
-    this.raf = requestAnimationFrame(this.smoothUpdateTick);
+    this.smoothRaf = requestAnimationFrame(this.smoothUpdateTick);
   }
 
   updateScroll(scroll) {
@@ -128,18 +135,37 @@ export default class AFScroll {
   }
 
   onResize() {
-    this.resizeBody();
+    this.updateHeight();
+    // if (this.autoHeight > 0) this.updateHeight(); // double to fix some size issues
   }
 
-  resizeBody() {
-    this.singleResize();
-    this.singleResize(); // double to fix some size issues
-  }
+  updateHeight() {
+    const scrollHeight = this.scrollEl.scrollHeight;
+    if (scrollHeight === this.lastHeight) return;
 
-  singleResize() {
+    this.lastHeight = scrollHeight;
     style(this.bodyEl, {
-      height: `${this.scrollEl.scrollHeight}px`,
+      height: `${scrollHeight}px`,
     });
+  }
+
+  startAutoHeight() {
+    if (this.autoHeight === 0 || this.autoHeight === false) return;
+
+    this.heightRaf = requestAnimationFrame(this.autoHeightTick);
+  }
+
+  stopAutoHeight() {
+    cancelAnimationFrame(this.heightRaf);
+  }
+
+  autoHeightUpdate() {
+    if (++this.autoHeightFrame >= this.autoHeight) {
+      this.autoHeightFrame = 0;
+      this.updateHeight();
+    }
+
+    this.heightRaf = requestAnimationFrame(this.autoHeightTick);
   }
 
   /**
@@ -174,6 +200,7 @@ export default class AFScroll {
   destroy() {
     if (this.scrollEl === null) return;
 
+    this.stopAutoHeight();
     this.unbindEvents();
     this.removeScroll();
 

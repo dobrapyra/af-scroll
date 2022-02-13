@@ -32,7 +32,7 @@ var $20b4a97a61b3fccb$export$2e2bcd8739ae039 = {
 
 
 class $4fa36e821943b400$export$2e2bcd8739ae039 {
-    constructor({ smoothForce: smoothForce = 0.8 , smoothLimit: smoothLimit = 0.2 , className: className = 'afScroll' , wrapExclude: wrapExclude = 'script, link' , onUpdate: onUpdate = ()=>{
+    constructor({ smoothForce: smoothForce = 0.8 , smoothLimit: smoothLimit = 0.2 , className: className = 'afScroll' , wrapExclude: wrapExclude = 'script, link' , autoHeight: autoHeight = 6 , onUpdate: onUpdate = ()=>{
     } , onComplete: onComplete = ()=>{
     }  } = {
     }){
@@ -40,6 +40,7 @@ class $4fa36e821943b400$export$2e2bcd8739ae039 {
         this.smoothLimit = smoothLimit;
         this.className = className;
         this.wrapExclude = wrapExclude;
+        this.autoHeight = autoHeight;
         this.onUpdate = onUpdate;
         this.onComplete = onComplete;
         this.targetScroll = 0;
@@ -47,6 +48,8 @@ class $4fa36e821943b400$export$2e2bcd8739ae039 {
         this.lockedScroll = null;
         this.bodyEl = document.getElementsByTagName('body')[0];
         this.scrollEl = null;
+        this.autoHeightFrame = 0;
+        this.lastHeight = null;
         this.bindThis();
         this.init();
     }
@@ -57,10 +60,11 @@ class $4fa36e821943b400$export$2e2bcd8739ae039 {
         if (this.scrollEl !== null) return;
         this.targetScroll = window.scrollY;
         this.createScroll();
-        this.resizeBody();
+        this.onResize();
         this.scrollTo(this.targetScroll);
         this.updateScroll(this.targetScroll);
         this.bindEvents();
+        this.startAutoHeight();
     }
     /**
    * create scroll wrapper element
@@ -91,6 +95,7 @@ class $4fa36e821943b400$export$2e2bcd8739ae039 {
         this.onScrollEvent = this.onScroll.bind(this);
         this.onResizeEvent = this.onResize.bind(this);
         this.smoothUpdateTick = this.smoothUpdate.bind(this);
+        this.autoHeightTick = this.autoHeightUpdate.bind(this);
     }
     bindEvents() {
         window.addEventListener('scroll', this.onScrollEvent);
@@ -103,8 +108,8 @@ class $4fa36e821943b400$export$2e2bcd8739ae039 {
     onScroll() {
         if (this.lockedScroll !== null) this.scrollTo(this.lockedScroll);
         this.targetScroll = window.scrollY;
-        cancelAnimationFrame(this.raf);
-        this.raf = requestAnimationFrame(this.smoothUpdateTick);
+        cancelAnimationFrame(this.smoothRaf);
+        this.smoothRaf = requestAnimationFrame(this.smoothUpdateTick);
     }
     smoothUpdate() {
         if (Math.abs(this.targetScroll - this.lastScroll) < this.smoothLimit) {
@@ -113,7 +118,7 @@ class $4fa36e821943b400$export$2e2bcd8739ae039 {
             return;
         }
         this.updateScroll($20b4a97a61b3fccb$export$3a89f8d6f6bf6c9f(this.lastScroll, this.targetScroll, this.smoothFactor));
-        this.raf = requestAnimationFrame(this.smoothUpdateTick);
+        this.smoothRaf = requestAnimationFrame(this.smoothUpdateTick);
     }
     updateScroll(scroll) {
         this.lastScroll = scroll;
@@ -121,16 +126,30 @@ class $4fa36e821943b400$export$2e2bcd8739ae039 {
         this.onUpdate(scroll);
     }
     onResize() {
-        this.resizeBody();
+        this.updateHeight();
+    // if (this.autoHeight > 0) this.updateHeight(); // double to fix some size issues
     }
-    resizeBody() {
-        this.singleResize();
-        this.singleResize(); // double to fix some size issues
-    }
-    singleResize() {
+    updateHeight() {
+        const scrollHeight = this.scrollEl.scrollHeight;
+        if (scrollHeight === this.lastHeight) return;
+        this.lastHeight = scrollHeight;
         $20b4a97a61b3fccb$export$1d567c320f4763bc(this.bodyEl, {
-            height: `${this.scrollEl.scrollHeight}px`
+            height: `${scrollHeight}px`
         });
+    }
+    startAutoHeight() {
+        if (this.autoHeight === 0 || this.autoHeight === false) return;
+        this.heightRaf = requestAnimationFrame(this.autoHeightTick);
+    }
+    stopAutoHeight() {
+        cancelAnimationFrame(this.heightRaf);
+    }
+    autoHeightUpdate() {
+        if (++this.autoHeightFrame >= this.autoHeight) {
+            this.autoHeightFrame = 0;
+            this.updateHeight();
+        }
+        this.heightRaf = requestAnimationFrame(this.autoHeightTick);
     }
     /**
    * scrollTo
@@ -156,6 +175,7 @@ class $4fa36e821943b400$export$2e2bcd8739ae039 {
    * @public
    */ destroy() {
         if (this.scrollEl === null) return;
+        this.stopAutoHeight();
         this.unbindEvents();
         this.removeScroll();
         this.lockedScroll = null;
