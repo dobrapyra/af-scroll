@@ -127,6 +127,8 @@ export default class AFScroll {
   }
 
   smoothUpdate() {
+    if (this.lockedScroll !== null) return;
+
     if (Math.abs(this.targetScroll - this.lastScroll) < this.smoothLimit) {
       this.updateScroll(this.targetScroll);
       this.onComplete(this.targetScroll);
