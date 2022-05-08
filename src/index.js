@@ -103,7 +103,7 @@ export default class AFScroll {
   bindThis() {
     this.onScrollEvent = this.onScroll.bind(this);
     this.onResizeEvent = this.onResize.bind(this);
-    this.smoothUpdateTick = this.smoothUpdate.bind(this);
+    this.smoothTick = this.smoothUpdate.bind(this);
     this.autoHeightTick = this.autoHeightUpdate.bind(this);
   }
 
@@ -123,7 +123,7 @@ export default class AFScroll {
     this.targetScroll = window.scrollY;
 
     cancelAnimationFrame(this.smoothRaf);
-    this.smoothRaf = requestAnimationFrame(this.smoothUpdateTick);
+    this.smoothRaf = requestAnimationFrame(this.smoothTick);
   }
 
   smoothUpdate() {
@@ -137,7 +137,7 @@ export default class AFScroll {
 
     this.updateScroll(lerp(this.lastScroll, this.targetScroll, this.smoothFactor));
 
-    this.smoothRaf = requestAnimationFrame(this.smoothUpdateTick);
+    this.smoothRaf = requestAnimationFrame(this.smoothTick);
   }
 
   updateScroll(scroll) {
