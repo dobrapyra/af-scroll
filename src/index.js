@@ -5,6 +5,7 @@ import { each, lerp, style } from './helpers';
  * @param {Object} options general options
  * @property {Number} smoothForce smoothing force in range 0.0 - 1.0, 0: no smooth, 1: no scroll
  * @property {Number} smoothLimit min diff between current and target value to keep smooth loop
+ * @property {Element} scrollEl static scroll wrapper element
  * @property {String} className css class name of scroll wrapper element
  * @property {Array} wrapExclude css selector to exclude from wrapping
  * @property {Number} autoHeight height checkoing period in frames, 1: each frame, 0: disabled
@@ -15,14 +16,16 @@ export default class AFScroll {
   constructor({
     smoothForce = 0.8,
     smoothLimit = 0.2,
+    scrollEl = null,
     className = 'afScroll',
     wrapExclude = 'script, link',
-    autoHeight = 6,
+    autoHeight = 12,
     onUpdate = () => {},
     onComplete = () => {}
   } = {}) {
     this.smoothFactor = 1 - smoothForce;
     this.smoothLimit = smoothLimit;
+    this.staticScrollEl = scrollEl;
     this.className = className;
     this.wrapExclude = wrapExclude;
     this.autoHeight = autoHeight;
@@ -64,10 +67,11 @@ export default class AFScroll {
    * create scroll wrapper element
    */
   createScroll() {
-    const { bodyEl, className, wrapExclude } = this;
+    const { bodyEl, staticScrollEl } = this;
 
-    const scrollEl = document.createElement('div');
-    scrollEl.setAttribute('class', className);
+    const scrollEl = staticScrollEl !== null
+      ? staticScrollEl
+      : document.createElement('div');
     style(scrollEl, {
       position: 'fixed',
       top: 0,
@@ -76,6 +80,14 @@ export default class AFScroll {
       height: '100%',
       overflow: 'hidden',
     });
+
+    this.scrollEl = scrollEl;
+
+    if (staticScrollEl !== null) return;
+
+    const { className, wrapExclude } = this;
+
+    scrollEl.setAttribute('class', className);
 
     const childrenArr = [];
     each(bodyEl.children, childEl => {
@@ -86,8 +98,6 @@ export default class AFScroll {
       scrollEl.appendChild(childEl);
     });
     bodyEl.insertBefore(scrollEl, bodyEl.children[0]);
-
-    this.scrollEl = scrollEl;
   }
 
   bindThis() {
@@ -211,9 +221,25 @@ export default class AFScroll {
    * remove scroll wrapper element
    */
   removeScroll() {
-    const { bodyEl, scrollEl } = this;
+    const { bodyEl, scrollEl, staticScrollEl } = this;
 
     style(bodyEl, { height: '' });
+    this.scrollEl = null;
+    this.autoHeightFrame = 0;
+    this.lastHeight = null;
+
+    if (staticScrollEl !== null) {
+      style(scrollEl, {
+        position: '',
+        top: '',
+        left: '',
+        width: '',
+        height: '',
+        overflow: '',
+      });
+
+      return;
+    }
 
     const childrenArr = [];
     each(scrollEl.children, childEl => {
@@ -223,7 +249,5 @@ export default class AFScroll {
       bodyEl.insertBefore(childEl, scrollEl);
     });
     bodyEl.removeChild(scrollEl);
-
-    this.scrollEl = null;
   }
 }
