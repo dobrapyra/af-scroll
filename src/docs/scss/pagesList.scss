@@ -1,0 +1,18 @@
+.pagesList {
+  $root: &;
+  display: block;
+  padding: 10px;
+
+  &__items {
+    display: block;
+  }
+
+  &__item {
+    display: block;
+  }
+
+  &__link {
+    display: inline-block;
+    padding: 4px;
+  }
+}

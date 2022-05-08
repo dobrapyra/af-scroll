@@ -88,6 +88,21 @@ body {
   border-top: 1px solid #c3c3c3;
 }
 
+.pagesList {
+  display: block;
+  padding: 10px;
+}
+.pagesList__items {
+  display: block;
+}
+.pagesList__item {
+  display: block;
+}
+.pagesList__link {
+  display: inline-block;
+  padding: 4px;
+}
+
 .colLayout {
   display: flex;
   flex-direction: row-reverse;
@@ -199,4 +214,4 @@ body {
   font-size: 18px;
   line-height: 1.5;
 }
-/*# sourceMappingURL=index.f56aa078.css.map */
+/*# sourceMappingURL=default.f56aa078.css.map */

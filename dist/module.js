@@ -1,19 +1,19 @@
-const $bc68805842a7be7a$export$79b2f7037acddd43 = (arr, cb)=>{
+function $bc68805842a7be7a$export$79b2f7037acddd43(arr, cb) {
     const l = arr.length;
     for(let i = 0; i < l; i++){
         const result = cb(arr[i], i, arr);
         if (result === true) continue;
         if (result === false) break;
     }
-};
-const $bc68805842a7be7a$export$3a89f8d6f6bf6c9f = (begin, end, factor)=>{
+}
+function $bc68805842a7be7a$export$3a89f8d6f6bf6c9f(begin, end, factor) {
     return begin + (end - begin) * factor;
-};
-const $bc68805842a7be7a$export$1d567c320f4763bc = (el, styles)=>{
+}
+function $bc68805842a7be7a$export$1d567c320f4763bc(el, styles) {
     Object.keys(styles).forEach((styleKey)=>{
         el.style[styleKey] = styles[styleKey];
     });
-};
+}
 var $bc68805842a7be7a$export$2e2bcd8739ae039 = {
     each: $bc68805842a7be7a$export$79b2f7037acddd43,
     lerp: $bc68805842a7be7a$export$3a89f8d6f6bf6c9f,
@@ -22,12 +22,13 @@ var $bc68805842a7be7a$export$2e2bcd8739ae039 = {
 
 
 class $cf838c15c8b009ba$export$2e2bcd8739ae039 {
-    constructor({ smoothForce: smoothForce = 0.8 , smoothLimit: smoothLimit = 0.2 , className: className = 'afScroll' , wrapExclude: wrapExclude = 'script, link' , autoHeight: autoHeight = 6 , onUpdate: onUpdate = ()=>{
+    constructor({ smoothForce: smoothForce = 0.8 , smoothLimit: smoothLimit = 0.2 , scrollEl: scrollEl = null , className: className = 'afScroll' , wrapExclude: wrapExclude = 'script, link' , autoHeight: autoHeight = 12 , onUpdate: onUpdate = ()=>{
     } , onComplete: onComplete = ()=>{
     }  } = {
     }){
         this.smoothFactor = 1 - smoothForce;
         this.smoothLimit = smoothLimit;
+        this.staticScrollEl = scrollEl;
         this.className = className;
         this.wrapExclude = wrapExclude;
         this.autoHeight = autoHeight;
@@ -59,9 +60,8 @@ class $cf838c15c8b009ba$export$2e2bcd8739ae039 {
     /**
    * create scroll wrapper element
    */ createScroll() {
-        const { bodyEl: bodyEl , className: className , wrapExclude: wrapExclude  } = this;
-        const scrollEl = document.createElement('div');
-        scrollEl.setAttribute('class', className);
+        const { bodyEl: bodyEl , staticScrollEl: staticScrollEl  } = this;
+        const scrollEl = staticScrollEl !== null ? staticScrollEl : document.createElement('div');
         $bc68805842a7be7a$export$1d567c320f4763bc(scrollEl, {
             position: 'fixed',
             top: 0,
@@ -70,6 +70,10 @@ class $cf838c15c8b009ba$export$2e2bcd8739ae039 {
             height: '100%',
             overflow: 'hidden'
         });
+        this.scrollEl = scrollEl;
+        if (staticScrollEl !== null) return;
+        const { className: className , wrapExclude: wrapExclude  } = this;
+        scrollEl.setAttribute('class', className);
         const childrenArr = [];
         $bc68805842a7be7a$export$79b2f7037acddd43(bodyEl.children, (childEl)=>{
             if (childEl === scrollEl || childEl.matches(wrapExclude)) return true;
@@ -79,12 +83,11 @@ class $cf838c15c8b009ba$export$2e2bcd8739ae039 {
             scrollEl.appendChild(childEl);
         });
         bodyEl.insertBefore(scrollEl, bodyEl.children[0]);
-        this.scrollEl = scrollEl;
     }
     bindThis() {
         this.onScrollEvent = this.onScroll.bind(this);
         this.onResizeEvent = this.onResize.bind(this);
-        this.smoothUpdateTick = this.smoothUpdate.bind(this);
+        this.smoothTick = this.smoothUpdate.bind(this);
         this.autoHeightTick = this.autoHeightUpdate.bind(this);
     }
     bindEvents() {
@@ -99,16 +102,17 @@ class $cf838c15c8b009ba$export$2e2bcd8739ae039 {
         if (this.lockedScroll !== null) this.scrollTo(this.lockedScroll);
         this.targetScroll = window.scrollY;
         cancelAnimationFrame(this.smoothRaf);
-        this.smoothRaf = requestAnimationFrame(this.smoothUpdateTick);
+        this.smoothRaf = requestAnimationFrame(this.smoothTick);
     }
     smoothUpdate() {
+        if (this.lockedScroll !== null) return;
         if (Math.abs(this.targetScroll - this.lastScroll) < this.smoothLimit) {
             this.updateScroll(this.targetScroll);
             this.onComplete(this.targetScroll);
             return;
         }
         this.updateScroll($bc68805842a7be7a$export$3a89f8d6f6bf6c9f(this.lastScroll, this.targetScroll, this.smoothFactor));
-        this.smoothRaf = requestAnimationFrame(this.smoothUpdateTick);
+        this.smoothRaf = requestAnimationFrame(this.smoothTick);
     }
     updateScroll(scroll) {
         this.lastScroll = scroll;
@@ -173,10 +177,24 @@ class $cf838c15c8b009ba$export$2e2bcd8739ae039 {
     /**
    * remove scroll wrapper element
    */ removeScroll() {
-        const { bodyEl: bodyEl , scrollEl: scrollEl  } = this;
+        const { bodyEl: bodyEl , scrollEl: scrollEl , staticScrollEl: staticScrollEl  } = this;
         $bc68805842a7be7a$export$1d567c320f4763bc(bodyEl, {
             height: ''
         });
+        this.scrollEl = null;
+        this.autoHeightFrame = 0;
+        this.lastHeight = null;
+        if (staticScrollEl !== null) {
+            $bc68805842a7be7a$export$1d567c320f4763bc(scrollEl, {
+                position: '',
+                top: '',
+                left: '',
+                width: '',
+                height: '',
+                overflow: ''
+            });
+            return;
+        }
         const childrenArr = [];
         $bc68805842a7be7a$export$79b2f7037acddd43(scrollEl.children, (childEl)=>{
             childrenArr.push(childEl);
@@ -185,7 +203,6 @@ class $cf838c15c8b009ba$export$2e2bcd8739ae039 {
             bodyEl.insertBefore(childEl, scrollEl);
         });
         bodyEl.removeChild(scrollEl);
-        this.scrollEl = null;
     }
 }
 

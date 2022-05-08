@@ -12,7 +12,7 @@
   "scripts": {
     "watch": "parcel watch",
     "build": "parcel build",
-    "demo": "parcel src/docs/index.pug --dist-dir docs --port 1235"
+    "demo": "parcel src/docs/*.pug src/docs/examples/*.pug --dist-dir docs --port 1235"
   },
   "keywords": [
     "animation",
@@ -25,6 +25,7 @@
   "devDependencies": {
     "@parcel/transformer-pug": "^2.3.1",
     "@parcel/transformer-sass": "^2.3.1",
+    "eslint": "^8.15.0",
     "parcel": "^2.3.1"
   }
 }

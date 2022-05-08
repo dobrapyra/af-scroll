@@ -52,3 +52,7 @@ If you want to manipulate DOM elements by js and set them based on the scroll po
 * js updates for current scroll position  
 (update visible scroll position & any custom DOM manipulations by js)
 * **user sees new scroll position & DOM elements updated by js in the same time**
+
+## Options
+
+## Methods
