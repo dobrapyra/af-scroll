@@ -12,8 +12,8 @@ import AFScroll from '../../../dist/module';
     { selector: '[data-reinit]', cb: () => { afScroll.init(); } },
     { selector: '[data-lock]', cb: () => { afScroll.lock(); } },
     { selector: '[data-unlock]', cb: () => { afScroll.unlock(); } },
-  ].map(action => {
-    const button = document.querySelector(action.selector);
-    button.addEventListener('click', action.cb);
+  ].map(({ selector, cb }) => {
+    const button = document.querySelector(selector);
+    button.addEventListener('click', cb);
   })
 })();
