@@ -1,8 +1,8 @@
-import AFScroll from '../../../dist/module';
+import createAFScroll from '../../../dist/module';
 
 (function(){
   // AFScroll
-  const afScroll = new AFScroll({
+  const afScroll = createAFScroll({
     scrollEl: document.querySelector('.afScroll'),
   });
 
