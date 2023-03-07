@@ -12,7 +12,7 @@
   "scripts": {
     "watch": "parcel watch",
     "build": "parcel build",
-    "demo": "parcel src/docs/*.pug src/docs/examples/*.pug --dist-dir docs --port 1235"
+    "demo": "parcel src/docs/*.pug --dist-dir docs --port 1235 --public-url ./"
   },
   "keywords": [
     "animation",
