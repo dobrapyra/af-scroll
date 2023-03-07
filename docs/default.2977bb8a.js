@@ -562,7 +562,7 @@ var _module = require("../../../dist/module");
 var _moduleDefault = parcelHelpers.interopDefault(_module);
 (function() {
     // AFScroll
-    const afScroll = new (0, _moduleDefault.default)();
+    const afScroll = (0, _moduleDefault.default)();
     [
         {
             selector: "[data-scroll-top]",
@@ -629,44 +629,28 @@ var $bc68805842a7be7a$export$2e2bcd8739ae039 = {
     lerp: $bc68805842a7be7a$export$3a89f8d6f6bf6c9f,
     style: $bc68805842a7be7a$export$1d567c320f4763bc
 };
-class $cf838c15c8b009ba$export$2e2bcd8739ae039 {
-    constructor({ smoothForce: smoothForce = 0.8 , smoothLimit: smoothLimit = 0.2 , scrollEl: scrollEl = null , className: className = "afScroll" , wrapExclude: wrapExclude = "script, link" , autoHeight: autoHeight = 12 , onUpdate: onUpdate = ()=>{} , onComplete: onComplete = ()=>{}  } = {}){
-        this.smoothFactor = 1 - smoothForce;
-        this.smoothLimit = smoothLimit;
-        this.staticScrollEl = scrollEl;
-        this.className = className;
-        this.wrapExclude = wrapExclude;
-        this.autoHeight = autoHeight;
-        this.onUpdate = onUpdate;
-        this.onComplete = onComplete;
-        this.targetScroll = 0;
-        this.lastScroll = 0;
-        this.lockedScroll = null;
-        this.bodyEl = document.getElementsByTagName("body")[0];
-        this.scrollEl = null;
-        this.autoHeightFrame = 0;
-        this.lastHeight = null;
-        this.bindThis();
-        this.init();
-    }
-    /**
-   * initialize AFScroll
-   * @public
-   */ init() {
-        if (this.scrollEl !== null) return;
-        this.targetScroll = window.scrollY;
-        this.createScroll();
-        this.onResize();
-        this.scrollTo(this.targetScroll);
-        this.updateScroll(this.targetScroll);
-        this.bindEvents();
-        this.startAutoHeight();
-    }
+function $cf838c15c8b009ba$export$2e2bcd8739ae039({ smoothForce: smoothForceArg = 0.8 , smoothLimit: smoothLimitArg = 0.2 , scrollEl: scrollElArg = null , className: classNameArg = "afScroll" , wrapExclude: wrapExcludeArg = "script, link" , autoHeight: autoHeightArg = 12 , onUpdate: onUpdateArg = ()=>{} , onComplete: onCompleteArg = ()=>{}  } = {}) {
+    const smoothFactor = 1 - smoothForceArg;
+    const smoothLimit = smoothLimitArg;
+    const staticScrollEl = scrollElArg;
+    const className = classNameArg;
+    const wrapExclude = wrapExcludeArg;
+    const autoHeight = autoHeightArg;
+    const onUpdate = onUpdateArg;
+    const onComplete = onCompleteArg;
+    let targetScroll = 0;
+    let lastScroll = 0;
+    let lockedScroll = null;
+    let smoothRaf = null;
+    let heightRaf = null;
+    const bodyEl = document.getElementsByTagName("body")[0];
+    let scrollEl = null;
+    let autoHeightFrame = 0;
+    let lastHeight = null;
     /**
    * create scroll wrapper element
-   */ createScroll() {
-        const { bodyEl: bodyEl , staticScrollEl: staticScrollEl  } = this;
-        const scrollEl = staticScrollEl !== null ? staticScrollEl : document.createElement("div");
+   */ function createScroll() {
+        scrollEl = staticScrollEl !== null ? staticScrollEl : document.createElement("div");
         $bc68805842a7be7a$export$1d567c320f4763bc(scrollEl, {
             position: "fixed",
             top: 0,
@@ -675,9 +659,7 @@ class $cf838c15c8b009ba$export$2e2bcd8739ae039 {
             height: "100%",
             overflow: "hidden"
         });
-        this.scrollEl = scrollEl;
         if (staticScrollEl !== null) return;
-        const { className: className , wrapExclude: wrapExclude  } = this;
         scrollEl.setAttribute("class", className);
         const childrenArr = [];
         $bc68805842a7be7a$export$79b2f7037acddd43(bodyEl.children, (childEl)=>{
@@ -689,106 +671,14 @@ class $cf838c15c8b009ba$export$2e2bcd8739ae039 {
         });
         bodyEl.insertBefore(scrollEl, bodyEl.children[0]);
     }
-    bindThis() {
-        this.onScrollEvent = this.onScroll.bind(this);
-        this.onResizeEvent = this.onResize.bind(this);
-        this.smoothTick = this.smoothUpdate.bind(this);
-        this.autoHeightTick = this.autoHeightUpdate.bind(this);
-    }
-    bindEvents() {
-        window.addEventListener("scroll", this.onScrollEvent);
-        window.addEventListener("resize", this.onResizeEvent);
-    }
-    unbindEvents() {
-        window.removeEventListener("scroll", this.onScrollEvent);
-        window.removeEventListener("resize", this.onResizeEvent);
-    }
-    onScroll() {
-        if (this.lockedScroll !== null) this.scrollTo(this.lockedScroll);
-        this.targetScroll = window.scrollY;
-        cancelAnimationFrame(this.smoothRaf);
-        this.smoothRaf = requestAnimationFrame(this.smoothTick);
-    }
-    smoothUpdate() {
-        if (this.lockedScroll !== null) return;
-        if (Math.abs(this.targetScroll - this.lastScroll) < this.smoothLimit) {
-            this.updateScroll(this.targetScroll);
-            this.onComplete(this.targetScroll);
-            return;
-        }
-        this.updateScroll($bc68805842a7be7a$export$3a89f8d6f6bf6c9f(this.lastScroll, this.targetScroll, this.smoothFactor));
-        this.smoothRaf = requestAnimationFrame(this.smoothTick);
-    }
-    updateScroll(scroll) {
-        this.lastScroll = scroll;
-        this.scrollEl.scrollTop = scroll;
-        this.onUpdate(scroll);
-    }
-    onResize() {
-        this.updateHeight();
-        this.updateHeight(); // double to fix some size issues
-    }
-    updateHeight() {
-        const scrollHeight = this.scrollEl.scrollHeight;
-        if (scrollHeight === this.lastHeight) return;
-        this.lastHeight = scrollHeight;
-        $bc68805842a7be7a$export$1d567c320f4763bc(this.bodyEl, {
-            height: `${scrollHeight}px`
-        });
-    }
-    startAutoHeight() {
-        if (this.autoHeight === 0 || this.autoHeight === false) return;
-        this.heightRaf = requestAnimationFrame(this.autoHeightTick);
-    }
-    stopAutoHeight() {
-        cancelAnimationFrame(this.heightRaf);
-    }
-    autoHeightUpdate() {
-        if (++this.autoHeightFrame >= this.autoHeight) {
-            this.autoHeightFrame = 0;
-            this.updateHeight();
-        }
-        this.heightRaf = requestAnimationFrame(this.autoHeightTick);
-    }
-    /**
-   * scrollTo
-   * @public
-   * @param {Number} scroll scroll value
-   */ scrollTo(scroll) {
-        document.body.scrollTop = document.documentElement.scrollTop = scroll;
-    }
-    /**
-   * lock scroll
-   * @public
-   */ lock() {
-        this.lockedScroll = this.lastScroll;
-    }
-    /**
-   * unlock scroll
-   * @public
-   */ unlock() {
-        this.lockedScroll = null;
-    }
-    /**
-   * destroy AFScroll
-   * @public
-   */ destroy() {
-        if (this.scrollEl === null) return;
-        this.stopAutoHeight();
-        this.unbindEvents();
-        this.removeScroll();
-        this.lockedScroll = null;
-    }
     /**
    * remove scroll wrapper element
-   */ removeScroll() {
-        const { bodyEl: bodyEl , scrollEl: scrollEl , staticScrollEl: staticScrollEl  } = this;
+   */ function removeScroll() {
         $bc68805842a7be7a$export$1d567c320f4763bc(bodyEl, {
             height: ""
         });
-        this.scrollEl = null;
-        this.autoHeightFrame = 0;
-        this.lastHeight = null;
+        autoHeightFrame = 0;
+        lastHeight = null;
         if (staticScrollEl !== null) {
             $bc68805842a7be7a$export$1d567c320f4763bc(scrollEl, {
                 position: "",
@@ -798,6 +688,7 @@ class $cf838c15c8b009ba$export$2e2bcd8739ae039 {
                 height: "",
                 overflow: ""
             });
+            scrollEl = null;
             return;
         }
         const childrenArr = [];
@@ -808,7 +699,113 @@ class $cf838c15c8b009ba$export$2e2bcd8739ae039 {
             bodyEl.insertBefore(childEl, scrollEl);
         });
         bodyEl.removeChild(scrollEl);
+        scrollEl = null;
     }
+    /**
+   * scrollTo
+   * @public
+   * @param {Number} scroll scroll value
+   */ function scrollTo(scroll) {
+        document.body.scrollTop = document.documentElement.scrollTop = scroll;
+    }
+    /**
+   * lock scroll
+   * @public
+   */ function lock() {
+        lockedScroll = lastScroll;
+    }
+    /**
+   * unlock scroll
+   * @public
+   */ function unlock() {
+        lockedScroll = null;
+    }
+    function updateScroll(scroll) {
+        lastScroll = scroll;
+        scrollEl.scrollTop = scroll;
+        onUpdate(scroll);
+    }
+    function smoothUpdate() {
+        if (lockedScroll !== null) return;
+        if (Math.abs(targetScroll - lastScroll) < smoothLimit) {
+            updateScroll(targetScroll);
+            onComplete(targetScroll);
+            return;
+        }
+        updateScroll($bc68805842a7be7a$export$3a89f8d6f6bf6c9f(lastScroll, targetScroll, smoothFactor));
+        smoothRaf = requestAnimationFrame(smoothUpdate);
+    }
+    function onScroll() {
+        if (lockedScroll !== null) scrollTo(lockedScroll);
+        targetScroll = window.scrollY;
+        cancelAnimationFrame(smoothRaf);
+        smoothRaf = requestAnimationFrame(smoothUpdate);
+    }
+    function autoHeightUpdate() {
+        if (++autoHeightFrame >= autoHeight) {
+            autoHeightFrame = 0;
+            updateHeight();
+        }
+        heightRaf = requestAnimationFrame(autoHeightUpdate);
+    }
+    function startAutoHeight() {
+        if (autoHeight === 0 || autoHeight === false) return;
+        heightRaf = requestAnimationFrame(autoHeightUpdate);
+    }
+    function stopAutoHeight() {
+        cancelAnimationFrame(heightRaf);
+    }
+    function updateHeight() {
+        const scrollHeight = scrollEl.scrollHeight;
+        if (scrollHeight === lastHeight) return;
+        lastHeight = scrollHeight;
+        $bc68805842a7be7a$export$1d567c320f4763bc(bodyEl, {
+            height: `${scrollHeight}px`
+        });
+    }
+    function onResize() {
+        updateHeight();
+        updateHeight(); // double to fix some size issues
+    }
+    function bindEvents() {
+        window.addEventListener("scroll", onScroll);
+        window.addEventListener("resize", onResize);
+    }
+    function unbindEvents() {
+        window.removeEventListener("scroll", onScroll);
+        window.removeEventListener("resize", onResize);
+    }
+    /**
+   * initialize AFScroll
+   * @public
+   */ function init() {
+        if (scrollEl !== null) return;
+        targetScroll = window.scrollY;
+        createScroll();
+        onResize();
+        scrollTo(targetScroll);
+        updateScroll(targetScroll);
+        bindEvents();
+        startAutoHeight();
+    }
+    /**
+   * destroy AFScroll
+   * @public
+   */ function destroy() {
+        if (scrollEl === null) return;
+        stopAutoHeight();
+        unbindEvents();
+        removeScroll();
+        lockedScroll = null;
+    }
+    init();
+    return {
+        init: init,
+        scrollTo: scrollTo,
+        lock: lock,
+        unlock: unlock,
+        destroy: destroy
+    };
 }
 
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"gkKU3":[function(require,module,exports) {
