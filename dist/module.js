@@ -1,4 +1,8 @@
-function $bc68805842a7be7a$export$79b2f7037acddd43(arr, cb) {
+/**
+ * lerp
+ * @param {Array} arr array or other iterable collection
+ * @param {Function} cb callback function for each array element
+ */ function $bc68805842a7be7a$export$79b2f7037acddd43(arr, cb) {
     const l = arr.length;
     for(let i = 0; i < l; i++){
         const result = cb(arr[i], i, arr);

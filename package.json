@@ -23,9 +23,9 @@
   "author": "dobrapyra",
   "license": "MIT",
   "devDependencies": {
-    "@parcel/transformer-pug": "^2.7.0",
-    "@parcel/transformer-sass": "^2.7.0",
-    "eslint": "^8.15.0",
-    "parcel": "^2.7.0"
+    "@parcel/transformer-pug": "^2.8.3",
+    "@parcel/transformer-sass": "^2.8.3",
+    "eslint": "^8.35.0",
+    "parcel": "^2.8.3"
   }
 }

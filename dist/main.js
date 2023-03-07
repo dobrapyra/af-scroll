@@ -8,7 +8,11 @@ function $parcel$export(e, n, v, s) {
 $parcel$defineInteropFlag(module.exports);
 
 $parcel$export(module.exports, "default", () => $4fa36e821943b400$export$2e2bcd8739ae039);
-function $20b4a97a61b3fccb$export$79b2f7037acddd43(arr, cb) {
+/**
+ * lerp
+ * @param {Array} arr array or other iterable collection
+ * @param {Function} cb callback function for each array element
+ */ function $20b4a97a61b3fccb$export$79b2f7037acddd43(arr, cb) {
     const l = arr.length;
     for(let i = 0; i < l; i++){
         const result = cb(arr[i], i, arr);
