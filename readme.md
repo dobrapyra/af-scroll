@@ -12,8 +12,8 @@ It allows to perform js based DOM manipulation related to page scroll just in ti
 ### Initialization
 
 ```js
-import AFScroll from 'af-scroll';
-new AFScroll();
+import createAFScroll from 'af-scroll';
+createAFScroll();
 ```
 
 ## Features
