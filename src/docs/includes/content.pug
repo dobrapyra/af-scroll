@@ -29,21 +29,36 @@
       title: 'Section 6',
       text: 'Cupiditate ex iusto repudiandae officiis obcaecati fuga, consectetur consequuntur voluptates est officia eligendi accusantium nisi ut deserunt inventore nulla. Lorem ipsum dolor sit amet consectetur adipisicing elit.',
       image: { src: './img/03.jpg', alt: 'image 03' }
+    },
+    {
+      title: 'Section 7',
+      text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate ex iusto repudiandae officiis obcaecati fuga, dicta, modi optio, consectetur consequuntur voluptates est officia eligendi accusantium nisi ut deserunt inventore nulla.',
+      image: { src: './img/01.jpg', alt: 'image 01' }
+    },
+    {
+      title: 'Section 8',
+      text: 'Cupiditate ex iusto repudiandae officiis obcaecati fuga, dicta, modi optio, consectetur consequuntur voluptates est officia eligendi accusantium nisi ut deserunt inventore nulla. Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+      image: { src: './img/02.jpg', alt: 'image 02' }
+    },
+    {
+      title: 'Section 9',
+      text: 'Cupiditate ex iusto repudiandae officiis obcaecati fuga, consectetur consequuntur voluptates est officia eligendi accusantium nisi ut deserunt inventore nulla. Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+      image: { src: './img/03.jpg', alt: 'image 03' }
     }
   ]
 -
   const items = [
     {
       title: 'Title 1',
-      text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate ex iusto repudiandae officiis obcaecati fuga, dicta, modi optio, consectetur consequuntur voluptates est officia eligendi accusantium nisi ut deserunt inventore nulla.'
+      text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate ex iusto repudiandae officiis obcaecati fuga, dicta, modi optio, consectetur consequuntur voluptates est officia eligendi accusantium nisi ut deserunt inventore nulla. Dolor sit amet consectetur adipisicing elit. Cupiditate ex iusto repudiandae officiis obcaecati fuga, dicta, modi optio, consectetur consequuntur voluptates est officia eligendi accusantium nisi. Cupiditate ex iusto repudiandae officiis obcaecati fuga, dicta, modi optio, consectetur consequuntur voluptates est officia eligendi accusantium nisi ut deserunt inventore nulla.'
     },
     {
       title: 'Title 2',
-      text: 'Cupiditate ex iusto repudiandae officiis obcaecati fuga, dicta, modi optio, consectetur consequuntur voluptates est officia eligendi accusantium nisi ut deserunt inventore nulla.'
+      text: 'Cupiditate ex iusto repudiandae officiis obcaecati fuga, dicta, modi optio, consectetur consequuntur voluptates est officia eligendi accusantium nisi ut deserunt inventore nulla. Dolor sit amet consectetur adipisicing elit. Cupiditate ex iusto repudiandae officiis obcaecati fuga, dicta, modi optio, consectetur consequuntur voluptates est officia eligendi accusantium nisi. Lorem ipsum dolor sit amet consectetur adipisicing. Cupiditate ex iusto repudiandae officiis fuga, dicta, modi optio, consectetur consequuntur voluptates est officia eligendi accusantium nisi ut deserunt inventore.'
     },
     {
       title: 'Title 3',
-      text: 'Dolor sit amet consectetur adipisicing elit. Cupiditate ex iusto repudiandae officiis obcaecati fuga, dicta, modi optio, consectetur consequuntur voluptates est officia eligendi accusantium nisi.'
+      text: 'Dolor sit amet consectetur adipisicing elit. Cupiditate ex iusto repudiandae officiis obcaecati fuga, dicta, modi optio, consectetur consequuntur voluptates est officia eligendi accusantium nisi. Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate ex iusto repudiandae officiis obcaecati fuga, dicta, modi optio, consectetur consequuntur voluptates est officia eligendi accusantium nisi ut deserunt inventore nulla. Dolor sit amet consectetur adipisicing elit. Cupiditate ex iusto repudiandae officiis obcaecati fuga, dicta, modi optio, consectetur consequuntur voluptates est officia eligendi accusantium nisi. Cupiditate ex iusto repudiandae officiis obcaecati fuga, dicta, modi optio, consectetur consequuntur voluptates est officia eligendi accusantium nisi ut deserunt inventore nulla.'
     },
   ]
 
@@ -54,10 +69,10 @@ main.main
   div.colLayout
     div.colLayout__side
       div.sidebar
-        button.sidebar__button(data-destroy) Destroy
-        button.sidebar__button(data-reinit) Reinit
-        button.sidebar__button(data-lock) Lock
-        button.sidebar__button(data-unlock) Unlock
+        button.sidebar__button.button(data-destroy) Destroy
+        button.sidebar__button.button(data-reinit) Reinit
+        button.sidebar__button.button(data-lock) Lock
+        button.sidebar__button.button(data-unlock) Unlock
     div.colLayout__main
       each section, index in sections
         section.textImage(class= (index % 2 === 1) ? 'textImage--reverse' : '')

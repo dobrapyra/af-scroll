@@ -1,8 +1,12 @@
-.pagesList {
+.examples {
   $root: &;
   display: block;
-  padding: 10px;
-  font-size: 20px;
+  padding: 12px;
+  font-size: 16px;
+
+  &__back {
+    margin-bottom: 12px;
+  }
 
   &__items {
     display: block;
@@ -10,10 +14,37 @@
 
   &__item {
     display: block;
+    padding: 12px;
+    border: 1px solid #e1e1e1;
+
+    & + & {
+      margin-top: 12px;
+    }
+  }
+
+  &__title {
+    font-size: 20px;
+    line-height: 1.2;
+    font-weight: 500;
+  }
+
+  &__desc {
+    font-size: 16px;
+    line-height: 1.2;
+    margin-top: 8px;
+  }
+
+  &__code {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 16px;
+    line-height: 1.5;
+    margin-top: 8px;
+    padding: 12px 8px;
+    background-color: #313131;
+    color: #f1f1f1;
   }
 
   &__link {
-    display: inline-block;
-    padding: 4px;
+    margin-top: 12px;
   }
 }
