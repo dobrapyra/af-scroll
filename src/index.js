@@ -160,6 +160,10 @@ export default function createAFScroll({
     smoothRaf = requestAnimationFrame(smoothUpdate);
   }
 
+  function breakSmoothLoop() {
+    cancelAnimationFrame(smoothRaf);
+  }
+
   function autoHeightUpdate() {
     if (++autoHeightFrame >= autoHeight) {
       autoHeightFrame = 0;
@@ -229,6 +233,7 @@ export default function createAFScroll({
   function destroy() {
     if (scrollEl === null) return;
 
+    breakSmoothLoop();
     stopAutoHeight();
     unbindEvents();
     removeScroll();
