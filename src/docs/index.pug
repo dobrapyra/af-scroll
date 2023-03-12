@@ -1,10 +1,64 @@
+-
+  var codeDefault = `
+  const afScroll = createAFScroll();
+  `;
+-
+  var codeStatic = `
+  const afScroll = createAFScroll({
+    scrollEl: document.querySelector('.afScroll'),
+  });
+  `;
+-
+  var codeEvents = `
+  const afScroll = createAFScroll({
+    onUpdate: (scroll) => { console.log('update', scroll); },
+    onComplete: (scroll) => { console.log('complete', scroll); },
+  });
+  `;
+-
+  var codeSmooth = `
+  const afScroll = createAFScroll({
+    smoothForce: 0.95,
+  });
+  `;
+-
+  var demos = [
+    {
+      title: 'default',
+      desc: 'Default options and auto create wrapper',
+      code: codeDefault,
+      link: './default.pug',
+    },
+    {
+      title: 'static wrapper',
+      desc: 'Custom static wrapper, no DOM manipulation',
+      code: codeStatic,
+      link: './static.pug',
+    },
+    {
+      title: 'events',
+      desc: 'Example events handlers',
+      code: codeEvents,
+      link: './events.pug',
+    },
+    {
+      title: 'realy smooth',
+      desc: 'Much more smooth scroll',
+      code: codeSmooth,
+      link: './smooth.pug',
+    },
+  ]
 doctype html
 html(lang="en")
   include includes/head.pug
   body
-    nav.pagesList
-      ul.pagesList__items
-        li.pagesList__item
-          a.pagesList__link(href="./default.pug") default
-        li.pagesList__item
-          a.pagesList__link(href="./static.pug") static
+    div.examples
+      a.examples__back.button(href="https://github.com/dobrapyra/af-scroll.git") go to GitHub
+      ul.examples__items
+        each demo in demos
+          li.examples__item
+            h2.examples__title= demo.title
+            p.examples__desc= demo.desc
+            pre.examples__code
+              != demo.code
+            a.examples__link.button(href=demo.link) View demo

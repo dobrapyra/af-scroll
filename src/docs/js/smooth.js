@@ -2,7 +2,9 @@ import createAFScroll from '../../../dist/esmodule';
 
 (function(){
   // AFScroll
-  const afScroll = createAFScroll();
+  const afScroll = createAFScroll({
+    smoothForce: 0.95,
+  });
 
   [
     { selector: '[data-scroll-top]', cb: () => { afScroll.scrollTo(0); } },

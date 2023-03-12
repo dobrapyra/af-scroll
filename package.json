@@ -2,18 +2,6 @@
   "name": "af-scroll",
   "version": "1.0.0",
   "description": "Animation Frame Scroll",
-  "source": "src/index.js",
-  "main": "dist/main.js",
-  "module": "dist/module.js",
-  "files": [
-    "/readme.md",
-    "/dist"
-  ],
-  "scripts": {
-    "watch": "parcel watch",
-    "build": "parcel build",
-    "demo": "parcel src/docs/*.pug --dist-dir docs --port 1235 --public-url ./"
-  },
   "keywords": [
     "animation",
     "scroll",
@@ -22,6 +10,44 @@
   ],
   "author": "dobrapyra",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dobrapyra/af-scroll.git"
+  },
+  "scripts": {
+    "watch": "parcel watch --target esmodule --target commonjs",
+    "build": "parcel build --target esmodule --target commonjs --no-cache",
+    "start": "parcel 'src/docs/index.pug' --dist-dir tmp --port 1235",
+    "docs": "parcel build --target docs --no-cache"
+  },
+  "main": "dist/commonjs.js",
+  "esmodule": "dist/esmodule.js",
+  "commonjs": "dist/commonjs.js",
+  "docs": "docs/index.html",
+  "targets": {
+    "esmodule": {
+      "source": "src/index.js",
+      "distDir": "./dist",
+      "outputFormat": "esmodule",
+      "isLibrary": true
+    },
+    "commonjs": {
+      "source": "src/index.js",
+      "distDir": "./dist",
+      "outputFormat": "commonjs",
+      "isLibrary": true
+    },
+    "docs": {
+      "source": "src/docs/index.pug",
+      "distDir": "./docs",
+      "publicUrl": "./",
+      "isLibrary": false
+    }
+  },
+  "files": [
+    "/readme.md",
+    "/dist"
+  ],
   "devDependencies": {
     "@parcel/transformer-pug": "^2.8.3",
     "@parcel/transformer-sass": "^2.8.3",

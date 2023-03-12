@@ -2,7 +2,10 @@ import createAFScroll from '../../../dist/esmodule';
 
 (function(){
   // AFScroll
-  const afScroll = createAFScroll();
+  const afScroll = createAFScroll({
+    onUpdate: (scroll) => { console.log('update', scroll); },
+    onComplete: (scroll) => { console.log('complete', scroll); },
+  });
 
   [
     { selector: '[data-scroll-top]', cb: () => { afScroll.scrollTo(0); } },

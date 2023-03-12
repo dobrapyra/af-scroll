@@ -7,8 +7,8 @@ import { each, lerp, style } from './helpers';
  * @property {Number} smoothLimit min diff between current and target value to keep smooth loop
  * @property {Element} scrollEl static scroll wrapper element
  * @property {String} className css class name of scroll wrapper element
- * @property {Array} wrapExclude css selector to exclude from wrapping
- * @property {Number} autoHeight height checkoing period in frames, 1: each frame, 0: disabled
+ * @property {String} wrapExclude css selector to exclude from wrapping
+ * @property {Number} autoHeight height checking period in frames, 1: each frame, 0: disabled
  * @property {Function} onUpdate callback function triggered on scroll update
  * @property {Function} onComplete callback function triggered after smooth loop stopped
  */
@@ -160,6 +160,10 @@ export default function createAFScroll({
     smoothRaf = requestAnimationFrame(smoothUpdate);
   }
 
+  function breakSmoothLoop() {
+    cancelAnimationFrame(smoothRaf);
+  }
+
   function autoHeightUpdate() {
     if (++autoHeightFrame >= autoHeight) {
       autoHeightFrame = 0;
@@ -229,6 +233,7 @@ export default function createAFScroll({
   function destroy() {
     if (scrollEl === null) return;
 
+    breakSmoothLoop();
     stopAutoHeight();
     unbindEvents();
     removeScroll();

@@ -7,12 +7,12 @@ function $parcel$export(e, n, v, s) {
 
 $parcel$defineInteropFlag(module.exports);
 
-$parcel$export(module.exports, "default", () => $4fa36e821943b400$export$2e2bcd8739ae039);
+$parcel$export(module.exports, "default", () => $2776a60caf88deef$export$2e2bcd8739ae039);
 /**
  * lerp
  * @param {Array} arr array or other iterable collection
  * @param {Function} cb callback function for each array element
- */ function $20b4a97a61b3fccb$export$79b2f7037acddd43(arr, cb) {
+ */ function $9daa40506ab05f9d$export$79b2f7037acddd43(arr, cb) {
     const l = arr.length;
     for(let i = 0; i < l; i++){
         const result = cb(arr[i], i, arr);
@@ -20,22 +20,22 @@ $parcel$export(module.exports, "default", () => $4fa36e821943b400$export$2e2bcd8
         if (result === false) break;
     }
 }
-function $20b4a97a61b3fccb$export$3a89f8d6f6bf6c9f(begin, end, factor) {
+function $9daa40506ab05f9d$export$3a89f8d6f6bf6c9f(begin, end, factor) {
     return begin + (end - begin) * factor;
 }
-function $20b4a97a61b3fccb$export$1d567c320f4763bc(el, styles) {
+function $9daa40506ab05f9d$export$1d567c320f4763bc(el, styles) {
     Object.keys(styles).forEach((styleKey)=>{
         el.style[styleKey] = styles[styleKey];
     });
 }
-var $20b4a97a61b3fccb$export$2e2bcd8739ae039 = {
-    each: $20b4a97a61b3fccb$export$79b2f7037acddd43,
-    lerp: $20b4a97a61b3fccb$export$3a89f8d6f6bf6c9f,
-    style: $20b4a97a61b3fccb$export$1d567c320f4763bc
+var $9daa40506ab05f9d$export$2e2bcd8739ae039 = {
+    each: $9daa40506ab05f9d$export$79b2f7037acddd43,
+    lerp: $9daa40506ab05f9d$export$3a89f8d6f6bf6c9f,
+    style: $9daa40506ab05f9d$export$1d567c320f4763bc
 };
 
 
-function $4fa36e821943b400$export$2e2bcd8739ae039({ smoothForce: smoothForceArg = 0.8 , smoothLimit: smoothLimitArg = 0.2 , scrollEl: scrollElArg = null , className: classNameArg = "afScroll" , wrapExclude: wrapExcludeArg = "script, link" , autoHeight: autoHeightArg = 12 , onUpdate: onUpdateArg = ()=>{} , onComplete: onCompleteArg = ()=>{}  } = {}) {
+function $2776a60caf88deef$export$2e2bcd8739ae039({ smoothForce: smoothForceArg = 0.8 , smoothLimit: smoothLimitArg = 0.2 , scrollEl: scrollElArg = null , className: classNameArg = "afScroll" , wrapExclude: wrapExcludeArg = "script, link" , autoHeight: autoHeightArg = 12 , onUpdate: onUpdateArg = ()=>{} , onComplete: onCompleteArg = ()=>{}  } = {}) {
     const smoothFactor = 1 - smoothForceArg;
     const smoothLimit = smoothLimitArg;
     const staticScrollEl = scrollElArg;
@@ -57,7 +57,7 @@ function $4fa36e821943b400$export$2e2bcd8739ae039({ smoothForce: smoothForceArg 
    * create scroll wrapper element
    */ function createScroll() {
         scrollEl = staticScrollEl !== null ? staticScrollEl : document.createElement("div");
-        (0, $20b4a97a61b3fccb$export$1d567c320f4763bc)(scrollEl, {
+        (0, $9daa40506ab05f9d$export$1d567c320f4763bc)(scrollEl, {
             position: "fixed",
             top: 0,
             left: 0,
@@ -68,11 +68,11 @@ function $4fa36e821943b400$export$2e2bcd8739ae039({ smoothForce: smoothForceArg 
         if (staticScrollEl !== null) return;
         scrollEl.setAttribute("class", className);
         const childrenArr = [];
-        (0, $20b4a97a61b3fccb$export$79b2f7037acddd43)(bodyEl.children, (childEl)=>{
+        (0, $9daa40506ab05f9d$export$79b2f7037acddd43)(bodyEl.children, (childEl)=>{
             if (childEl === scrollEl || childEl.matches(wrapExclude)) return true;
             childrenArr.push(childEl);
         });
-        (0, $20b4a97a61b3fccb$export$79b2f7037acddd43)(childrenArr, (childEl)=>{
+        (0, $9daa40506ab05f9d$export$79b2f7037acddd43)(childrenArr, (childEl)=>{
             scrollEl.appendChild(childEl);
         });
         bodyEl.insertBefore(scrollEl, bodyEl.children[0]);
@@ -80,13 +80,13 @@ function $4fa36e821943b400$export$2e2bcd8739ae039({ smoothForce: smoothForceArg 
     /**
    * remove scroll wrapper element
    */ function removeScroll() {
-        (0, $20b4a97a61b3fccb$export$1d567c320f4763bc)(bodyEl, {
+        (0, $9daa40506ab05f9d$export$1d567c320f4763bc)(bodyEl, {
             height: ""
         });
         autoHeightFrame = 0;
         lastHeight = null;
         if (staticScrollEl !== null) {
-            (0, $20b4a97a61b3fccb$export$1d567c320f4763bc)(scrollEl, {
+            (0, $9daa40506ab05f9d$export$1d567c320f4763bc)(scrollEl, {
                 position: "",
                 top: "",
                 left: "",
@@ -98,10 +98,10 @@ function $4fa36e821943b400$export$2e2bcd8739ae039({ smoothForce: smoothForceArg 
             return;
         }
         const childrenArr = [];
-        (0, $20b4a97a61b3fccb$export$79b2f7037acddd43)(scrollEl.children, (childEl)=>{
+        (0, $9daa40506ab05f9d$export$79b2f7037acddd43)(scrollEl.children, (childEl)=>{
             childrenArr.push(childEl);
         });
-        (0, $20b4a97a61b3fccb$export$79b2f7037acddd43)(childrenArr, (childEl)=>{
+        (0, $9daa40506ab05f9d$export$79b2f7037acddd43)(childrenArr, (childEl)=>{
             bodyEl.insertBefore(childEl, scrollEl);
         });
         bodyEl.removeChild(scrollEl);
@@ -138,7 +138,7 @@ function $4fa36e821943b400$export$2e2bcd8739ae039({ smoothForce: smoothForceArg 
             onComplete(targetScroll);
             return;
         }
-        updateScroll((0, $20b4a97a61b3fccb$export$3a89f8d6f6bf6c9f)(lastScroll, targetScroll, smoothFactor));
+        updateScroll((0, $9daa40506ab05f9d$export$3a89f8d6f6bf6c9f)(lastScroll, targetScroll, smoothFactor));
         smoothRaf = requestAnimationFrame(smoothUpdate);
     }
     function onScroll() {
@@ -146,6 +146,9 @@ function $4fa36e821943b400$export$2e2bcd8739ae039({ smoothForce: smoothForceArg 
         targetScroll = window.scrollY;
         cancelAnimationFrame(smoothRaf);
         smoothRaf = requestAnimationFrame(smoothUpdate);
+    }
+    function breakSmoothLoop() {
+        cancelAnimationFrame(smoothRaf);
     }
     function autoHeightUpdate() {
         if (++autoHeightFrame >= autoHeight) {
@@ -165,7 +168,7 @@ function $4fa36e821943b400$export$2e2bcd8739ae039({ smoothForce: smoothForceArg 
         const scrollHeight = scrollEl.scrollHeight;
         if (scrollHeight === lastHeight) return;
         lastHeight = scrollHeight;
-        (0, $20b4a97a61b3fccb$export$1d567c320f4763bc)(bodyEl, {
+        (0, $9daa40506ab05f9d$export$1d567c320f4763bc)(bodyEl, {
             height: `${scrollHeight}px`
         });
     }
@@ -199,6 +202,7 @@ function $4fa36e821943b400$export$2e2bcd8739ae039({ smoothForce: smoothForceArg 
    * @public
    */ function destroy() {
         if (scrollEl === null) return;
+        breakSmoothLoop();
         stopAutoHeight();
         unbindEvents();
         removeScroll();
@@ -215,4 +219,4 @@ function $4fa36e821943b400$export$2e2bcd8739ae039({ smoothForce: smoothForceArg 
 }
 
 
-//# sourceMappingURL=main.js.map
+//# sourceMappingURL=commonjs.js.map
