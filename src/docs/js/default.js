@@ -1,4 +1,4 @@
-import createAFScroll from '../../../dist/module';
+import createAFScroll from '../../../dist/esmodule';
 
 (function(){
   // AFScroll
