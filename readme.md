@@ -3,6 +3,10 @@
 The script aligns page scroll update with animation frame.  
 It allows to perform js based DOM manipulation related to page scroll just in time, not too late.
 
+[Demo](https://dobrapyra.github.io/af-scroll/)
+
+**Menu**
+
 * [Quick start](#quick-start)
 * [Features](#features)
 * [Disadvantages](#disadvantages)
