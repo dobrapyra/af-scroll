@@ -1,6 +1,6 @@
 {
   "name": "af-scroll",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Animation Frame Scroll",
   "keywords": [
     "animation",
@@ -46,6 +46,7 @@
   },
   "files": [
     "/readme.md",
+    "/changelog.md",
     "/dist"
   ],
   "devDependencies": {
