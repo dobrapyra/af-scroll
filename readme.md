@@ -106,6 +106,8 @@ createAFScroll({
 // example of using methods
 const afScroll = createAFScroll(/* optional options */);
 afScroll.scrollTo(0); // scroll to top
+afScroll.scrollTo(0, true); // scroll to top forced
+afScroll.free(); // free forced scroll
 afScroll.lock(); // lock scroll
 afScroll.unlock(); // unlock scroll
 afScroll.destroy(); // destroy af-scroll
@@ -115,7 +117,8 @@ afScroll.init(); // reinit af-scroll
 | Method | Arguments | Return | Description |
 | --- | --- | --- | --- |
 | `init()` | none | undefined | reinitialize the script after destroy |
-| `scrollTo(scroll)` | `scroll` {Number} target scroll value in px unit | undefined | scroll to `scroll` value |
+| `scrollTo(scroll, force)` | `scroll` {Number} target scroll value in px unit<br />`force` {Boolean} prevents user from changing a scroll target until it completes | undefined | scroll to `scroll` value |
+| `free()` | none | undefined | free forced scroll |
 | `lock()` | none | undefined | lock scroll |
 | `unlock()` | none | undefined | unlock scroll |
 | `destroy()` | none | undefined | destroy the script and restore original html |

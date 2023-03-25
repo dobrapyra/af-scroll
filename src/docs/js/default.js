@@ -6,6 +6,7 @@ import createAFScroll from '../../../dist/esmodule';
 
   [
     { selector: '[data-scroll-top]', cb: () => { afScroll.scrollTo(0); } },
+    { selector: '[data-scroll-top-force]', cb: () => { afScroll.scrollTo(0, true); } },
     { selector: '[data-destroy]', cb: () => { afScroll.destroy(); } },
     { selector: '[data-reinit]', cb: () => { afScroll.init(); } },
     { selector: '[data-lock]', cb: () => { afScroll.lock(); } },

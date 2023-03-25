@@ -33,6 +33,7 @@ export default function createAFScroll({
 
   let targetScroll = 0;
   let lastScroll = 0;
+  let forcedScroll = null;
   let lockedScroll = null;
   let smoothRaf = null;
   let heightRaf = null;
@@ -109,10 +110,21 @@ export default function createAFScroll({
   /**
    * scrollTo
    * @public
-   * @param {Number} scroll scroll value
+   * @param {Number} scroll scrollTop value
+   * @param {Boolean} force prevents user from changing a scroll target
    */
-  function scrollTo(scroll) {
+  function scrollTo(scroll, force = false) {
+    if (force) forcedScroll = scroll;
+
     document.body.scrollTop = document.documentElement.scrollTop = scroll;
+  }
+
+  /**
+   * free forced scroll
+   * @public
+   */
+  function free() {
+    forcedScroll = null;
   }
 
   /**
@@ -142,6 +154,7 @@ export default function createAFScroll({
 
     if (Math.abs(targetScroll - lastScroll) < smoothLimit) {
       updateScroll(targetScroll);
+      free();
       onComplete(targetScroll);
       return;
     }
@@ -153,6 +166,7 @@ export default function createAFScroll({
 
   function onScroll() {
     if (lockedScroll !== null) scrollTo(lockedScroll);
+    else if (forcedScroll !== null) scrollTo(forcedScroll);
 
     targetScroll = window.scrollY;
 
@@ -238,6 +252,7 @@ export default function createAFScroll({
     unbindEvents();
     removeScroll();
 
+    forcedScroll = null;
     lockedScroll = null;
   }
 
@@ -246,6 +261,7 @@ export default function createAFScroll({
   return {
     init,
     scrollTo,
+    free,
     lock,
     unlock,
     destroy,
