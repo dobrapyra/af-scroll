@@ -2,4 +2,9 @@
   display: block;
   padding: 8px 0;
   border-top: 1px solid #c3c3c3;
+
+  &__buttons {
+    display: flex;
+    gap: 4px;
+  }
 }
