@@ -46,6 +46,7 @@ function $2776a60caf88deef$export$2e2bcd8739ae039({ smoothForce: smoothForceArg 
     const onComplete = onCompleteArg;
     let targetScroll = 0;
     let lastScroll = 0;
+    let forcedScroll = null;
     let lockedScroll = null;
     let smoothRaf = null;
     let heightRaf = null;
@@ -110,9 +111,17 @@ function $2776a60caf88deef$export$2e2bcd8739ae039({ smoothForce: smoothForceArg 
     /**
    * scrollTo
    * @public
-   * @param {Number} scroll scroll value
-   */ function scrollTo(scroll) {
+   * @param {Number} scroll scrollTop value
+   * @param {Boolean} force prevents user from changing a scroll target
+   */ function scrollTo(scroll, force = false) {
+        if (force) forcedScroll = scroll;
         document.body.scrollTop = document.documentElement.scrollTop = scroll;
+    }
+    /**
+   * free forced scroll
+   * @public
+   */ function free() {
+        forcedScroll = null;
     }
     /**
    * lock scroll
@@ -135,6 +144,7 @@ function $2776a60caf88deef$export$2e2bcd8739ae039({ smoothForce: smoothForceArg 
         if (lockedScroll !== null) return;
         if (Math.abs(targetScroll - lastScroll) < smoothLimit) {
             updateScroll(targetScroll);
+            free();
             onComplete(targetScroll);
             return;
         }
@@ -143,6 +153,7 @@ function $2776a60caf88deef$export$2e2bcd8739ae039({ smoothForce: smoothForceArg 
     }
     function onScroll() {
         if (lockedScroll !== null) scrollTo(lockedScroll);
+        else if (forcedScroll !== null) scrollTo(forcedScroll);
         targetScroll = window.scrollY;
         cancelAnimationFrame(smoothRaf);
         smoothRaf = requestAnimationFrame(smoothUpdate);
@@ -206,12 +217,14 @@ function $2776a60caf88deef$export$2e2bcd8739ae039({ smoothForce: smoothForceArg 
         stopAutoHeight();
         unbindEvents();
         removeScroll();
+        forcedScroll = null;
         lockedScroll = null;
     }
     init();
     return {
         init: init,
         scrollTo: scrollTo,
+        free: free,
         lock: lock,
         unlock: unlock,
         destroy: destroy
