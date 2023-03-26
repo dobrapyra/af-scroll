@@ -18,7 +18,7 @@
     "watch": "parcel watch --target esmodule --target commonjs",
     "build": "parcel build --target esmodule --target commonjs --no-cache",
     "start": "parcel 'src/docs/index.pug' --dist-dir tmp --port 1235",
-    "docs": "parcel build --target docs --no-cache"
+    "docs": "parcel build --target docs --no-cache --no-content-hash"
   },
   "main": "dist/commonjs.js",
   "esmodule": "dist/esmodule.js",
