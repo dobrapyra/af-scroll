@@ -34,6 +34,21 @@ import createAFScroll from 'af-scroll';
 createAFScroll();
 ```
 
+## Imports
+
+The library build is delivered in two formats: `esmodule` and `commonjs`
+
+```js
+// default import (esmodule)
+import createAFScroll from 'af-scroll';
+
+// explicit import (esmodule)
+import createAFScroll from 'af-scroll/dist/esmodule';
+
+// explicit import (commonjs)
+const createAFScroll = require('af-scroll/dist/commonjs');
+```
+
 ## Features
 
 * alignment of js on scroll updates with the visual scroll update

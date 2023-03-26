@@ -1,6 +1,6 @@
 {
   "name": "af-scroll",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Animation Frame Scroll",
   "keywords": [
     "animation",
@@ -18,9 +18,9 @@
     "watch": "parcel watch --target esmodule --target commonjs",
     "build": "parcel build --target esmodule --target commonjs --no-cache",
     "start": "parcel 'src/docs/index.pug' --dist-dir tmp --port 1235",
-    "docs": "parcel build --target docs --no-cache"
+    "docs": "parcel build --target docs --no-cache --no-content-hash"
   },
-  "main": "dist/commonjs.js",
+  "main": "dist/esmodule.js",
   "esmodule": "dist/esmodule.js",
   "commonjs": "dist/commonjs.js",
   "docs": "docs/index.html",

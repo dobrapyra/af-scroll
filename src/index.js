@@ -108,6 +108,14 @@ export default function createAFScroll({
   }
 
   /**
+   * setNativeScroll
+   * @param {Number} scroll scrollTop value
+   */
+  function setNativeScroll(scroll) {
+    document.body.scrollTop = document.documentElement.scrollTop = scroll;
+  }
+
+  /**
    * scrollTo
    * @public
    * @param {Number} scroll scrollTop value
@@ -116,7 +124,7 @@ export default function createAFScroll({
   function scrollTo(scroll, force = false) {
     if (force) forcedScroll = scroll;
 
-    document.body.scrollTop = document.documentElement.scrollTop = scroll;
+    setNativeScroll(scroll);
   }
 
   /**
@@ -165,8 +173,8 @@ export default function createAFScroll({
   }
 
   function onScroll() {
-    if (lockedScroll !== null) scrollTo(lockedScroll);
-    else if (forcedScroll !== null) scrollTo(forcedScroll);
+    if (lockedScroll !== null) setNativeScroll(lockedScroll);
+    else if (forcedScroll !== null) setNativeScroll(forcedScroll);
 
     targetScroll = window.scrollY;
 
@@ -233,7 +241,7 @@ export default function createAFScroll({
     createScroll();
     onResize();
 
-    scrollTo(targetScroll);
+    setNativeScroll(targetScroll);
     updateScroll(targetScroll);
 
     bindEvents();

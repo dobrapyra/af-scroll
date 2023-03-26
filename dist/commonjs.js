@@ -109,13 +109,19 @@ function $2776a60caf88deef$export$2e2bcd8739ae039({ smoothForce: smoothForceArg 
         scrollEl = null;
     }
     /**
+   * setNativeScroll
+   * @param {Number} scroll scrollTop value
+   */ function setNativeScroll(scroll) {
+        document.body.scrollTop = document.documentElement.scrollTop = scroll;
+    }
+    /**
    * scrollTo
    * @public
    * @param {Number} scroll scrollTop value
    * @param {Boolean} force prevents user from changing a scroll target
    */ function scrollTo(scroll, force = false) {
         if (force) forcedScroll = scroll;
-        document.body.scrollTop = document.documentElement.scrollTop = scroll;
+        setNativeScroll(scroll);
     }
     /**
    * free forced scroll
@@ -152,8 +158,8 @@ function $2776a60caf88deef$export$2e2bcd8739ae039({ smoothForce: smoothForceArg 
         smoothRaf = requestAnimationFrame(smoothUpdate);
     }
     function onScroll() {
-        if (lockedScroll !== null) scrollTo(lockedScroll);
-        else if (forcedScroll !== null) scrollTo(forcedScroll);
+        if (lockedScroll !== null) setNativeScroll(lockedScroll);
+        else if (forcedScroll !== null) setNativeScroll(forcedScroll);
         targetScroll = window.scrollY;
         cancelAnimationFrame(smoothRaf);
         smoothRaf = requestAnimationFrame(smoothUpdate);
@@ -203,7 +209,7 @@ function $2776a60caf88deef$export$2e2bcd8739ae039({ smoothForce: smoothForceArg 
         targetScroll = window.scrollY;
         createScroll();
         onResize();
-        scrollTo(targetScroll);
+        setNativeScroll(targetScroll);
         updateScroll(targetScroll);
         bindEvents();
         startAutoHeight();
